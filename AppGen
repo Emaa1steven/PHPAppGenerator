@@ -1,0 +1,40 @@
+<?php
+if (isset($_POST['submit'])) {
+    $appName = $_POST['app_name'];
+    $appContent = $_POST['app_content'];
+    
+    // Create a new directory for the app
+    $directory = 'apps/' . $appName;
+    if (!is_dir($directory)) {
+        mkdir($directory, 0777, true);
+    }
+    
+    // Create a new PHP file for the app
+    $filePath = $directory . '/' . $appName . '.php';
+    $fileContent = "<?php\n\n" . $appContent . "\n\n?>";
+    
+    // Save the app content to the file
+    file_put_contents($filePath, $fileContent);
+    
+    echo 'App created successfully!';
+}
+?>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create an App</title>
+</head>
+<body>
+    <h2>Create an App</h2>
+    <form method="POST" action="">
+        <label for="app_name">App Name:</label>
+        <input type="text" name="app_name" id="app_name" required><br><br>
+        
+        <label for="app_content">App Content:</label><br>
+        <textarea name="app_content" id="app_content" rows="10" cols="50" required></textarea><br><br>
+        
+        <input type="submit" name="submit" value="Create App">
+    </form>
+</body>
+</html>
